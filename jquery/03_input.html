@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <input type="text" id="input1"><br>
+    <input type="password" id="input2"><br>
+    <button>제출</button>
+    <p id="p1"></p>
+    <p id="p2"></p>
+    <script>
+        // button 태그를 선택
+        $('button')
+        .click(function(){
+            // id가 input1인 태그를 선택하여 입력한 값을 id가 p1인 태그에 대입
+            let value = $('#input1').val()
+            $('#p1').text(value)
+            let value2 = $('#input2').val()
+            $('#p2').text(value2)
+        })
+
+        // id가 input1인 태그를 선택
+        $('#input1')
+        // 유저가 값을 입력할 때 마다
+        .keyup(function(){
+            let value = $(this).val()
+            $('#p1').text(value)
+        })
+        $('#input2')
+        .keyup(function(){
+            let value = $(this).val()
+            $('#p2').text(value)
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Jquery를 로드 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // jQuery함수는 $()
+        jQuery(
+            // 페이지가 로드될 때 함수를 실행
+            function(){
+                // 함수가 호출될 때 실행할 코드 
+                // p태그를 선택해서 제어
+                $('p').html('<b>1234</b>')
+            }
+        )
+        function a(){
+            // ul태그 중에 class 값이 first인 태그를 선택
+            $("ul.first")
+            // ul태그 안에 class가 foo인 태그를 선택
+            .find(".foo")
+            // 배경의 색을 red로 변경
+            .css('background-color', 'red')
+            .end()
+            .find(".bar")
+            .css('background-color', 'yellow')
+            .end()
+        }
+    </script>
+</head>
+<body onload="a()">
+    <p></p>
+    <p></p>
+    <ul class="first">
+        <li class="foo">list1</li>
+        <li>list2</li>
+        <li class="bar">list3</li>
+    </ul>
+    
+    <ul class="second">
+        <li class="foo">list1</li>
+        <li>list2</li>
+        <li class="bar">list3</li>
+    </ul>
+</body>
+</html>
