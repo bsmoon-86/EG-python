@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body> 
+
+    <!-- 그래프가 표시되는 영역 -->
+    <div>
+        <canvas id = 'myChart'></canvas>
+    </div>
+
+
+
+    <!-- corona data를 table 표시-->
+    <table border="1">
+        <!-- 컬럼 부분 -->
+        <thead>
+            <!-- columns -> df.columns -> [인덱스, 등록일시, 총사망자, ....] -->
+            {% for col in columns %}
+                <th>
+                    {{ col }}
+                </th>
+            {% endfor %}
+        </thead>
+        <tbody>
+            <!-- 
+                data -> {
+                    '인덱스' : [0, 1, 2, 3, 4], 
+                    '등록일시' : [202201, 202202, ....], 
+                    ...
+                }
+             -->
+            {% for i in range(cnt) %}
+                <tr>
+                    {% for col in columns %}
+                        <td>
+                            {{ data[col][i] }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+      
+    <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: {{ x }},
+            datasets: [{
+              label: '# of Votes',
+              data: {{ y }},
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+    </script>
+</body>
+</html>
