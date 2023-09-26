@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% include 'header.html' %}
+
+</head>
+<body>
+    <input type="text" id="input1"><br>
+    <input type="password" id="input2"><br>
+    <button>제출</button>
+    <script>
+        $('#input2')
+        .keyup(function(){
+            let value1 = $(this).val()
+
+            // ajax를 이용하여 비동기 통신
+            $.ajax(
+                {
+                    url : '/base_ajax', 
+                    data : {
+                        _id : value1
+                    }, 
+                    method : 'GET', 
+                    dataType : 'json'
+                }
+            )
+            // 통신이 정상적으로 완료되고 결과값을 리턴
+            .done(function(result){
+                alert(result['name'])
+            })
+            // 통신이 실패하는 경우
+            .fail(function(xhr, status, error){
+                // alert(error)
+            })
+            // 마무리가 되었을때
+            .always(function(xhr, status){
+                // alert(status)
+            })
+
+        })
+    </script>
+</body>
+</html>

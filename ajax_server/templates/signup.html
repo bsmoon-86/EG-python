@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% include 'header.html' %}
+    <style>
+        .user_info{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form action="/signup" method="post">
+        <label>ID</label>
+        <input type="text" name="input_id" id="input_id">
+        <span id = 'check_id'>아이디 중복체크</span>
+        <span id = 'message'></span>
+        <br>
+        <div class = 'user_info'>
+            <label>Password</label>
+            <input type="password" name="input_pass" id="input_pass" required>
+            <br>
+            <label>Confirm Password</label>
+            <input type="password" id="confirm_pass" required>
+            <br>
+            <label>Name</label>
+            <input type="text" name="input_name" id="input_name" required>
+            <br>
+            <label>Location</label>
+            <input type="text" name="input_loc" id="input_loc" required>
+            <br>
+            <input type="submit" id="submit" value="회원가입" disabled >
+        </div>
+    </form>
+    <script>
+        // id가 check_id인 태그를 클릭했을때
+        $('#check_id')
+        .click(function(){
+            // id가 input_id인 태그의 value를 변수에 대입
+            let _id = $('#input_id').val()
+            // ajax를 이용하여 _id를 서버에게 비동기 통신으로 요청을 보낸다. 
+
+            $.getJSON(
+                '/check_id', 
+                {
+                    "input_id" : _id
+                }, 
+                function(result, status){
+                    alert(status)
+                    // result에 able이 참이라면 
+                    if(result.able){
+                        // class가 user_info인 태그를 선택하여 user_info라는 class를 제거
+                        $('.user_info').toggleClass('user_info')
+                        // id가 message인 태그를 선택하여 '사용가능한 아이디'
+                        $('#message').text('사용 가능한 아이디')
+                        $('#check_id').toggleClass('user_info')
+                        // id가 input_id인 태그를 수정이 불가능하게 변경
+                        $('#input_id').attr('readonly', true)
+                    }else{
+                        $('#message').text('사용 불가능한 아이디')
+                    }
+                }
+            )
+        })
+
+        // password, confirm password의 값이 같아야 회원가입 버튼을 활성화
+        $('#confirm_pass')
+        .keyup(function(){
+            // id가 input_pass인 태그의 value
+            let password = $('#input_pass').val()
+            // this의 value
+            let confirm = $(this).val()
+            if(password == confirm){
+                $('#submit').attr('disabled', false)
+            }else{
+                $('#submit').attr('disabled', true)
+            }
+        })
+
+    </script>
+</body>
+</html>
