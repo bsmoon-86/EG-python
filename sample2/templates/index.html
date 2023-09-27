@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Jquery를 로드 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        function create_table(data){
+            // server에서 보내온 데이터 파일을 data 매개변수에 대입하여 함수 실행
+            // data -> [{'name' : xxxx, 'address' : xxxx, 'tel' : xxxx, 'category' : x}, ...]
+            let code = `
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>Address</td>
+                        <td>Tel</td>
+                    </tr>
+                `
+            let code3 = `</table>`
+
+            // for(i of data){
+            //     // i는 데이터의 형태? -> {'name' : xxxx, 'address' : xxxx, 'tel' : xxxx, 'category' : x}
+            //     let code2 = '<tr><td>' + i['name'] + '</td><td>' + i['address'] + '</td><td>' + i['tel'] + '</td></tr>'
+            //     code += code2
+            // }
+
+            for(let i = 0; i < data.length; i++){
+                // i는 index값
+                let code2 = '<tr><td>' + data[i]['name'] + '</td><td>' + data[i]['address'] + '</td><td>' + data[i]['tel'] + '</td></tr>'
+                code += code2
+            }
+            
+            // id가 table인 태그를 선택
+            $('#table').html(code+code3)
+        }
+
+        // 페이지가 시작될때 함수를 실행
+        $(function(){
+            // ajax를 이용하여 비동기 통신 
+            $.getJSON(
+                '/data', 
+                {
+                    cate : 9
+                }, 
+                function(result, status){
+                    // alert(result)
+                    create_table(result)
+                }
+            )
+        })
+    </script>
+</head>
+<body>
+    <select id = 'category'>
+        <option value="9">전체</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+    </select>
+    <div id= 'table'>
+
+    </div>
+    <script>
+        // id가 category인 태그는 선택
+        $('#category')
+        .change(function(){
+            let value = $('#category option:selected').val()
+            $.getJSON(
+                '/data', 
+                {
+                    cate : value
+                }, 
+                function(result, status){
+                    create_table(result)
+                }
+            )
+        })
+    </script>
+</body>
+</html>

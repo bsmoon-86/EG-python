@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>No</td>
+            <td>data</td>
+        </tr>
+        {% for x in data | reverse%}
+        <tr>
+            <td>{{loop.revindex}}</td>
+            <td>{{x}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+</body>
+</html>
