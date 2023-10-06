@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .container {
+            width: 600px;
+        }
+    </style>
 </head>
 <body> 
 
     <!-- 그래프가 표시되는 영역 -->
-    <div>
-        <canvas id = 'myChart'></canvas>
+    <div class="container">
+        <canvas class = 'myChart'></canvas>
     </div>
+    
+    <div class="container">
+        <canvas class = 'myChart'></canvas>
+    </div>
+    
 
 
 
@@ -48,26 +58,38 @@
 
       
     <script>
-        const ctx = document.getElementById('myChart');
-      
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: {{ x }},
-            datasets: [{
-              label: '# of Votes',
-              data: {{ y }},
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+        // const ctx = document.getElementById('myChart');
+        function chart(canvas, y_pos){
+
+            new Chart(canvas, {
+                type: 'bar',
+                data: {
+                    labels: {{ x }},
+                    datasets: [{
+                    label: '# of Votes',
+                    data: y_pos,
+                    borderWidth: 1
+                    }]
+            },
+            options: {
+                scales: {
+                y: {
+                    beginAtZero: true
+                }
+                }
             }
-          }
-        });
+            });
+        }
+
+
+        const ctx = document.getElementsByClassName('myChart');
+
+        const data_list = [ {{ y[0] }}, {{ y[1] }} ]
+        
+        for(let i = 0; i < ctx.length; i++){
+            chart(ctx[i], data_list[i])
+        }
+
     </script>
 </body>
 </html>

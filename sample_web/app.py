@@ -11,7 +11,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # port 번호 설정 
-port = 3000
+port = 4000
 
 # api생성
 # localhost:3000/ 요청시 아래의 함수를 호출
@@ -43,7 +43,10 @@ def corona():
     c_cnt = len(data.columns)
     columns = data.columns
     x_pos = data['기준일'].tolist()
-    y_pos = data['일일확진자'].tolist()
+    y_pos= []    
+    y_pos.append(data['일일확진자'].tolist())
+    y_pos.append(data['일일사망자'].tolist())
+    print(y_pos)
 
     return render_template(
         'corona.html', 
